@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" shutdownHook="disable">
+	<Properties>
+		<Property name="filename">als_connector_test</Property>
+	</Properties>
+	<Appenders>
+		<Console name="ConsoleLogger" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+		<Console name="ConsoleLoggerShort" target="SYSTEM_OUT">
+			<PatternLayout pattern="%msg%n" />
+		</Console>
+		<RollingFile name="RollingFileLogger" fileName="log/${filename}.log" filePattern="log/$${date:yyyy-MM}/$${filename}_%d{yyyy-MM-dd}_%i.log.gz">
+			<PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n" />
+			<Policies>
+				<!-- <OnStartupTriggeringPolicy /> -->
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="20 MB" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="org.eclipse.jetty" level="warn" additivity="true" />
+		<Logger name="org.reflections.Reflections" level="warn" additivity="true" />
+		<Logger name="org.hibernate" level="warn" additivity="true" />
+		<Logger name="util.db.AlsHibernateManager" level="warn" additivity="true" />
+		<Root level="info">
+			<AppenderRef ref="ConsoleLogger" />
+			<AppenderRef ref="RollingFileLogger" level="info" />
+			<!-- <AppenderRef ref="SmtpAppender" level="info" /> -->
+		</Root>
+	</Loggers>
+</Configuration>
