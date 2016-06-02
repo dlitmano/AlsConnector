@@ -36,7 +36,8 @@ public class AlsConnectorExample {
 	// TODO - set correct API-Key
 	private static final String API_KEY_ = "XJrEnTJksEFp9TdNm3VxFjBWkNRhpmdN";
 	private static final String ALS_URL_ = "http://als.dev.medieninnovation.com:4003/";
-	private static final String JOB_XML_FILE_NAME_ = "/JobCollection.xml";
+	private static final String JOB_XML_FILE_NAME_ = "/BeispielJobEebTeam2.xml";
+			//"/JobCollection.xml";
 
 	public static void main(String[] args)
 			throws UnsupportedEncodingException, IOException, JAXBException, AlsException {
