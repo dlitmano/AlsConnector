@@ -50,18 +50,18 @@ public class AlsConnectorExample {
 
 		// ------------------ READ FROM XML-FILE, EDIT, AND SEND
 		// -----------------------------
-		response = exampleReadJobFromFile(alsConnector);
-		handleAlsResponse(response);
+	//	response = exampleReadJobFromFile(alsConnector);
+	//	handleAlsResponse(response);
 
 		// -------------------- CREATE AND SEND JOB - SHORT EXAMPLE
 		// --------------------------
-		response = exampleCreateAndSendJobShort(alsConnector);
-		handleAlsResponse(response);
+	//	response = exampleCreateAndSendJobShort(alsConnector);
+	//	handleAlsResponse(response);
 
 		// -------------------- CREATE AND SEND JOB - LONG EXAMPLE
 		// ---------------------------
-		response = exampleCreateAndSendJobLong(alsConnector);
-		handleAlsResponse(response);
+	//	response = exampleCreateAndSendJobLong(alsConnector);
+	//	handleAlsResponse(response);
 
 	}
 
