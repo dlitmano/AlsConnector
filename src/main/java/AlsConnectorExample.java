@@ -37,10 +37,15 @@ public class AlsConnectorExample {
 	private static final String API_KEY_ = "XJrEnTJksEFp9TdNm3VxFjBWkNRhpmdN";
 	private static final String ALS_URL_ = "http://als.dev.medieninnovation.com:4003/";
 	private static final String JOB_XML_FILE_NAME_ = "/BeispielJobEebTeam2.xml";
+
+	
 			//"/JobCollection.xml";
 
 	public static void main(String[] args)
 			throws UnsupportedEncodingException, IOException, JAXBException, AlsException {
+		YelpAPI yelpAPI = new YelpAPI();
+		
+		
 		AlsConnector alsConnector = new AlsConnector(ALS_URL_);
 
 		// ------------------------- SEND JOB XML-FILE
@@ -200,6 +205,7 @@ public class AlsConnectorExample {
 	}
 
 	private static void handleAlsResponse(Object response) throws JAXBException {
+
 		if (response instanceof JobCollectionResponseType) {
 			JobCollectionResponseType jobCollectionResponseType = (JobCollectionResponseType) response;
 			for (JobResponseType jobResponseType : jobCollectionResponseType.getJobResponses())
@@ -213,5 +219,7 @@ public class AlsConnectorExample {
 		} else
 			System.out.println(response);
 	}
+	
+	
 
 }
