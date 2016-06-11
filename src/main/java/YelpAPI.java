@@ -34,9 +34,14 @@ public class YelpAPI {
 	private static final String API_HOST = "api.yelp.com";
 	private static final String DEFAULT_TERM = "bars";
 	private static final String DEFAULT_LOCATION = "Mannheim, Germany";
-	private static final int SEARCH_LIMIT = 10;
+	public static final int SEARCH_LIMIT = 7;
 	private static final String SEARCH_PATH = "/v2/search";
 	private static final String BUSINESS_PATH = "/v2/business";
+	public static String NAME_FIRST;
+	public static String SNIPPET_FIRST;
+	public static String IMG_FIRST;
+
+	public static String[][] RESULTS = new String [SEARCH_LIMIT][3];
 
 	/*
 	 * Update OAuth credentials below from the Yelp Developers API site:
@@ -58,8 +63,7 @@ public class YelpAPI {
 
 		YelpAPI yelpApi = new YelpAPI(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
 		queryAPI(yelpApi, yelpApiCli);
-		
-		
+
 	}
 
 	/**
@@ -118,8 +122,6 @@ public class YelpAPI {
 	public String searchByBusinessId(String businessID) {
 
 		OAuthRequest request = createOAuthRequest(BUSINESS_PATH + "/" + businessID);
-
-		System.out.println("test       " + request.toString());
 		return sendRequestAndGetResponse(request);
 	}
 
@@ -147,10 +149,6 @@ public class YelpAPI {
 		System.out.println("Querying " + request.getCompleteUrl() + " ...");
 		this.service.signRequest(this.accessToken, request);
 		Response response = request.send();
-
-		System.out.println(request.getOauthParameters() + " " + request.getRealm());
-		System.out.println("Response:" + request.toString());
-
 		return response.getBody();
 	}
 
@@ -176,27 +174,39 @@ public class YelpAPI {
 			System.out.println(searchResponseJSON);
 			System.exit(1);
 		}
-		
-		
 		JSONArray businesses = (JSONArray) response.get("businesses");
+
+		for (int i = 0; i < SEARCH_LIMIT; i++) {
+
+			JSONObject iBusiness = (JSONObject) businesses.get(i);
+			System.out.println(iBusiness.toJSONString());
+			RESULTS[i][0] = iBusiness.get("name").toString();
+			RESULTS[i][1] = iBusiness.get("rating").toString();
+			RESULTS[i][2] = iBusiness.get("image_url").toString().replaceAll("ms.jpg", "o.jpg");
+			System.out.println(RESULTS[i][2]);
+
+		}
+
+		// JSONArray businesses = (JSONArray) response.get("businesses");
+		
+/*		
 		JSONObject firstBusiness = (JSONObject) businesses.get(0);
 		JSONObject secondBusiness = (JSONObject) businesses.get(1);
 		JSONObject thirdBusiness = (JSONObject) businesses.get(2);
-		
-		String firstBusinessID = firstBusiness.get("id").toString();		
+
+		String firstBusinessID = firstBusiness.get("id").toString();
 		String secondBusinessID = secondBusiness.get("id").toString();
 		String thirdBusinessID = thirdBusiness.get("id").toString();
 
 		System.out.println(String.format(
 				"%s businesses found, querying business info for the top results \"%s\" , \"%s\" and \"%s\"",
 				businesses.size(), firstBusinessID, secondBusinessID, thirdBusinessID));
-
+		System.out.println("----------------------------------------------------------");
 		byte businesstext[] = firstBusinessID.toString().getBytes(ISO_8859_1);
-		
-		
+
 		// String business = new String(businesstext, UTF_8);
 		// System.out.println(business);
-		
+
 		// JSONArray arr = new JSONArray(result);
 		// JSONObject jObj = arr.getJSONObject(0);
 		// String date = jObj.getString("NeededString");
@@ -205,56 +215,57 @@ public class YelpAPI {
 
 		String businessResponseJSON = yelpApi.searchByBusinessId(firstBusinessID.toString());
 		System.out.println(String.format("Result for business \"%s\" found:", firstBusinessID.toString()));
-		//System.out.println(businessResponseJSON);
-		String name_first = firstBusiness.get("name").toString();
+		// System.out.println(businessResponseJSON);
+		NAME_FIRST = firstBusiness.get("name").toString();
+		SNIPPET_FIRST = firstBusiness.get("snippet_text").toString();
 		String rating_first = firstBusiness.get("rating").toString();
 		String rating_img_first = firstBusiness.get("rating_img_url").toString();
 		String url_first = firstBusiness.get("mobile_url").toString();
 		String phone_first = firstBusiness.get("phone").toString();
-		String image_first = firstBusiness.get("image_url").toString().replaceAll("ms.jpg", "o.jpg");
-		System.out.println("Name: "+name_first);
-		System.out.println("Rating: "+rating_first);
-		System.out.println("Sterne: "+rating_img_first);
-		System.out.println("URL: "+url_first);
-		System.out.println("Phone: "+phone_first);
-		System.out.println("Bild: "+image_first);
-		
-		
-		
+		IMG_FIRST = firstBusiness.get("image_url").toString().replaceAll("ms.jpg", "o.jpg");
+		System.out.println("Name: " + NAME_FIRST);
+		System.out.println("Rating: " + rating_first);
+		System.out.println("Sterne: " + rating_img_first);
+		System.out.println("URL: " + url_first);
+		System.out.println("Phone: " + phone_first);
+		System.out.println("Bild: " + IMG_FIRST);
+
 		System.out.println("----------------------------------------------------------");
 		String businessResponseJSON2 = yelpApi.searchByBusinessId(secondBusinessID.toString());
 		System.out.println(String.format("Result for business \"%s\" found:", secondBusinessID.toString()));
-		//System.out.println(businessResponseJSON2);
+		// System.out.println(businessResponseJSON2);
 		String name_second = secondBusiness.get("name").toString();
 		String rating_second = secondBusiness.get("rating").toString();
 		String rating_img_second = secondBusiness.get("rating_img_url").toString();
 		String url_second = secondBusiness.get("mobile_url").toString();
 		String phone_second = secondBusiness.get("phone").toString();
 		String image_second = secondBusiness.get("image_url").toString().replaceAll("ms.jpg", "o.jpg");
-		System.out.println("Name: "+name_second);
-		System.out.println("Rating: "+rating_second);
-		System.out.println("Sterne: "+rating_img_second);
-		System.out.println("URL: "+url_second);
-		System.out.println("Phone: "+phone_second);
-		System.out.println("Bild: "+image_second);
+		System.out.println("Name: " + name_second);
+		System.out.println("Rating: " + rating_second);
+		System.out.println("Sterne: " + rating_img_second);
+		System.out.println("URL: " + url_second);
+		System.out.println("Phone: " + phone_second);
+		System.out.println("Bild: " + image_second);
 		System.out.println("----------------------------------------------------------");
 		String businessResponseJSON3 = yelpApi.searchByBusinessId(thirdBusinessID.toString());
 		System.out.println(String.format("Result for business \"%s\" found:", thirdBusinessID.toString()));
-		//System.out.println(businessResponseJSON3);
+		// System.out.println(businessResponseJSON3);
 		String name_third = thirdBusiness.get("name").toString();
 		String rating_third = thirdBusiness.get("rating").toString();
 		String rating_img_third = thirdBusiness.get("rating_img_url").toString();
 		String url_third = thirdBusiness.get("mobile_url").toString();
 		String phone_third = thirdBusiness.get("phone").toString();
 		String image_third = thirdBusiness.get("image_url").toString().replaceAll("ms.jpg", "o.jpg");
-		System.out.println("Name: "+name_third);
-		System.out.println("Rating: "+rating_third);
-		System.out.println("Sterne: "+rating_img_third);
-		System.out.println("URL: "+url_third);
-		System.out.println("Phone: "+phone_third);
-		System.out.println("Bild: "+image_third);
+		System.out.println("Name: " + name_third);
+		System.out.println("Rating: " + rating_third);
+		System.out.println("Sterne: " + rating_img_third);
+		System.out.println("URL: " + url_third);
+		System.out.println("Phone: " + phone_third);
+		System.out.println("Bild: " + image_third);
 		System.out.println("----------------------------------------------------------");
+
 		
+	*/	
 	}
 
 	/**

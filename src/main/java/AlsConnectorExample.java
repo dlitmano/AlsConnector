@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Currency;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
@@ -8,6 +10,7 @@ import als.connector.ExceptionCollectionTypeHelper;
 import als.connector.JobCollectionResponseTypeHelper;
 import als.connector.JobCollectionTypeHelper;
 import exception.AlsException;
+import jaxb.AbstractAlsPlaceable;
 import jaxb.generated.content.ContentCollectionType;
 import jaxb.generated.content.ContentType;
 import jaxb.generated.content.ImageType;
@@ -19,6 +22,7 @@ import jaxb.generated.job.ContentToPageType;
 import jaxb.generated.job.JobCollectionType;
 import jaxb.generated.job.JobType;
 import jaxb.generated.job.LayoutGenerationJobType;
+import jaxb.generated.job.LayoutGeneratorGridType;
 import jaxb.generated.job.LayoutGeneratorTableType;
 import jaxb.generated.job.MultiPageType;
 import jaxb.generated.job.OutputCollectionType;
@@ -29,6 +33,7 @@ import jaxb.generated.jobResponse.JobCollectionResponseType;
 import jaxb.generated.jobResponse.JobResponseType;
 import jaxb.generated.product.ProductType;
 
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class AlsConnectorExample {
@@ -36,7 +41,7 @@ public class AlsConnectorExample {
 	// TODO - set correct API-Key
 	private static final String API_KEY_ = "XJrEnTJksEFp9TdNm3VxFjBWkNRhpmdN";
 	private static final String ALS_URL_ = "http://als.dev.medieninnovation.com:4003/";
-	private static final String JOB_XML_FILE_NAME_ = "/BeispielJobEebTeam2.xml";
+	private static final String JOB_XML_FILE_NAME_ = "/test.xml";
 
 	
 			//"/JobCollection.xml";
@@ -50,23 +55,23 @@ public class AlsConnectorExample {
 
 		// ------------------------- SEND JOB XML-FILE
 		// --------------------------------------
-		Object response = exampleSendFile(alsConnector);
-		handleAlsResponse(response);
+	//	Object response = exampleSendFile(alsConnector);
+	//	handleAlsResponse(response);
 
 		// ------------------ READ FROM XML-FILE, EDIT, AND SEND
 		// -----------------------------
-	//	response = exampleReadJobFromFile(alsConnector);
+	//	Object response = exampleReadJobFromFile(alsConnector);
 	//	handleAlsResponse(response);
 
 		// -------------------- CREATE AND SEND JOB - SHORT EXAMPLE
 		// --------------------------
-	//	response = exampleCreateAndSendJobShort(alsConnector);
+	//	Object response = exampleCreateAndSendJobShort(alsConnector);
 	//	handleAlsResponse(response);
 
 		// -------------------- CREATE AND SEND JOB - LONG EXAMPLE
 		// ---------------------------
-	//	response = exampleCreateAndSendJobLong(alsConnector);
-	//	handleAlsResponse(response);
+		Object response = exampleCreateAndSendJobLong(alsConnector);
+		handleAlsResponse(response);
 
 	}
 
@@ -80,7 +85,7 @@ public class AlsConnectorExample {
 			throws JAXBException, IOException, AlsException {
 		// build JobCollectionType object from XML file
 		JobCollectionType jobCollectionType2 = JobCollectionTypeHelper
-				.createInstance(AlsConnector.class.getClass().getResourceAsStream("/JobCollection-2.xml"));
+				.createInstance(AlsConnector.class.getClass().getResourceAsStream("/BeispielJobEebTeam2.xml"));
 
 		// jobCollectionType may be edited
 
@@ -91,25 +96,25 @@ public class AlsConnectorExample {
 	private static Object exampleCreateAndSendJobShort(AlsConnector alsConnector)
 			throws IOException, JAXBException, AlsException {
 		// build JobCollectionType object by your own
-		JobCollectionType jobCollectionType1 = new JobCollectionType();
-		ContentCollectionType contentCollection = new ContentCollectionType();
-		jobCollectionType1.setContentCollection(contentCollection);
+				JobCollectionType jobCollectionType1 = new JobCollectionType();
+				ContentCollectionType contentCollection = new ContentCollectionType();
+				jobCollectionType1.setContentCollection(contentCollection);
 
-		// Product
-		ProductType product = new ProductType();
-		product.setTitle("Mein Titel");
-		// TODO - initialize product
-		// ...
-		contentCollection.getContents().add(product);
+				// Product
+				ProductType product = new ProductType();
+				product.setTitle("Mein Titel");
+				// TODO - initialize product
+				// ...
+				contentCollection.getContents().add(product);
 
-		// job
-		JobType job = new JobType();
-		ConfigurationType configuration = new ConfigurationType();
-		configuration.setApiKey(API_KEY_);
-		job.setConfiguration(configuration);
-		// ...
+				// job
+				JobType job = new JobType();
+				ConfigurationType configuration = new ConfigurationType();
+				configuration.setApiKey(API_KEY_);
+				job.setConfiguration(configuration);
+				// ...
 
-		jobCollectionType1.getJobs().add(job);
+				jobCollectionType1.getJobs().add(job);
 
 		// send JobCollectionType
 		return alsConnector.sendJobCollectionTypeToServer(jobCollectionType1);
@@ -121,17 +126,26 @@ public class AlsConnectorExample {
 		JobCollectionType jobCollectionType = new JobCollectionType();
 		ContentCollectionType contentCollection = new ContentCollectionType();
 
-		for (int i = 0; i < 1; i++) {
+		
+		for (int i = 0; i < YelpAPI.SEARCH_LIMIT; i++) {
 			// Produkte erstellen
-			ProductType product1 = new ProductType();
-			product1.setPlaceableRefId("test1");
-			product1.setTitle("neues Produkt - Rasierer");
-			product1.setSubTitle("subtitle P1");
-			product1.setShortDescription("short Des P1");
-			product1.setLongDescription("Long Des");
-			product1.setLink("www.google.de");
-			product1.setPriceGross(39.99f);
+			
+			String id = "p"+i;
+			
+			ProductType product = new ProductType();
+			product.setPlaceableRefId(id);
+			//product1.setProductId(id);
+			product.setTitle(YelpAPI.RESULTS[i][0]);
+			System.out.println(YelpAPI.RESULTS[i][0]);
+			product.setSubTitle(id);
+			product.setShortDescription(YelpAPI.RESULTS[i][1]);
+			product.setLongDescription("Long Description");
+			//product1.setLink("www.google.de");
+			product.setPriceGross((float) 234.64);
+			product.setAvailability("available");
+			product.setTaxes((float) 19.0);
 
+		
 			// CategoryType category1 = new CategoryType();
 			// category1.setName("Cat1 P1");
 			// CategoryType category2 = new CategoryType();
@@ -139,39 +153,48 @@ public class AlsConnectorExample {
 			// product1.getCategories().add(category1);
 			// product1.getCategories().add(category2);
 
-			ImageType imgProduct1 = new ImageType();
-			imgProduct1.setUrl("http://www.messerschmied-eisele.de/grossfotos/rasierer/philips_rasierer.jpg");
-			imgProduct1.setWidth(400);
-			imgProduct1.setHeight(300);
-			imgProduct1.setAlternateText("Rasierer Bild");
-			product1.getImages().add(imgProduct1);
+			ImageType imgProduct = new ImageType();
+			imgProduct.setUrl(YelpAPI.RESULTS[i][2]);
+			imgProduct.setWidth(400);
+			imgProduct.setHeight(300);
+			imgProduct.setAlternateText("Bild");
+			product.getImages().add(imgProduct);
 
-			// die Produkte der contentCollection hinzufÃ¼gen
-			contentCollection.getContents().add(product1);
+			// die Produkte der contentCollection hinzufügen
+			contentCollection.getContents().add(product);
+			//System.out.println(contentCollection.getContents().get(i).getPlaceableRefId());;
+			
+			
 		}
-
+		
 		// Job erstellen
 		JobType job = new JobType();
 		PageCollectionType pageCollection = new PageCollectionType();
-
 		AbstractPageType multiPage = new MultiPageType();
+		
 		pageCollection.getPages().add(multiPage);
+		
 		ContentToPageCollectionType contentToPageCollection = new ContentToPageCollectionType();
 		multiPage.setContentToPageCollection(contentToPageCollection);
-		ContentToPageType contentToPage = new ContentToPageType();
-		contentToPageCollection.getContentToPage().add(contentToPage);
-
-		// TODO jedes Produkt der Seite hinzufÃ¼gen
+		//((MultiPageType) multiPage).setMaxPages(10);
+		
+		// TODO jedes Produkt der Seite hinzufügen
 		// weight every content equal
 		float defaultWeight = 1f / contentCollection.getContents().size();
-		for (ContentType content : contentCollection.getContents()) {
+		
+		System.out.println(contentCollection.getContents());
+		
+		for (AbstractAlsPlaceable content : contentCollection.getContents()) {
+			ContentToPageType contentToPage = new ContentToPageType();
 			contentToPage.setContentRef(content);
 			contentToPage.setWeight(defaultWeight);
+			contentToPageCollection.getContentToPage().add(contentToPage);
 		}
+		System.out.println("-----------------");
 
 		PageDesignType pageDesign = new PageDesignType();
 		pageDesign.setCssFile("default.css");
-		pageDesign.setCss("page{margin-top:0}");
+		pageDesign.setCss("page{ background-image: url(http://www.quinn.de/uploads/tx_dstsupersized/Hintergrundbild_grau_02.jpg); border: 1px solid black;}headline{font-size: 8.3pt;line-height: 9pt;}subheadline{font-size: 7.5pt;line-height: 8pt;}image{padding: 2px 0;}product {font-size: 7.5pt;line-height: 8.5pt;}first product {font-size: 10pt;line-height: 12pt;}first product currency {font-size: 15pt;line-height: 17pt;}first product headline {font-size: 11pt;line-height: 12pt;}first product subheadline {font-size: 10pt;line-height: 11pt;}");
 		pageCollection.setPageDesign(pageDesign);
 
 		LayoutGenerationJobType jobDescription = new LayoutGenerationJobType();
@@ -183,7 +206,7 @@ public class AlsConnectorExample {
 		OutputWebserverType outputWebserver = new OutputWebserverType();
 		outputWebserver.setDirectOutput(true);
 		outputWebserver.setOutputRefId("outputWebserver");
-		outputWebserver.setAddPagination(false);
+		outputWebserver.setAddPagination(true);
 		outputWebserver.setShowSubmittedJob(false);
 		outputWebserver.setShowWaiting(false);
 
@@ -194,7 +217,7 @@ public class AlsConnectorExample {
 		ConfigurationType conf = new ConfigurationType();
 		conf.setApiKey(API_KEY_);
 		conf.setMaxRenderingTime(2);
-		conf.setMinLayouts(12);
+		conf.setMinLayouts(3);
 		job.setConfiguration(conf);
 
 		// contentCollection jobColl hinzufÃ¼gen
