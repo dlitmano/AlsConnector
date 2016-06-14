@@ -32,16 +32,16 @@ import static java.nio.charset.StandardCharsets.*;
 public class YelpAPI {
 
 	private static final String API_HOST = "api.yelp.com";
-	private static final String DEFAULT_TERM = "bars";
-	private static final String DEFAULT_LOCATION = "Mannheim, Germany";
-	public static final int SEARCH_LIMIT = 7;
+	private static final String DEFAULT_TERM = "Landmarks & Historical Buildings";
+	private static final String DEFAULT_LOCATION = "Cologne, Germany";
+	public static final int SEARCH_LIMIT = 14;
 	private static final String SEARCH_PATH = "/v2/search";
 	private static final String BUSINESS_PATH = "/v2/business";
 	public static String NAME_FIRST;
 	public static String SNIPPET_FIRST;
 	public static String IMG_FIRST;
 
-	public static String[][] RESULTS = new String [SEARCH_LIMIT][3];
+	public static String[][] RESULTS = new String [SEARCH_LIMIT][10];
 
 	/*
 	 * Update OAuth credentials below from the Yelp Developers API site:
@@ -183,6 +183,8 @@ public class YelpAPI {
 			RESULTS[i][0] = iBusiness.get("name").toString();
 			RESULTS[i][1] = iBusiness.get("rating").toString();
 			RESULTS[i][2] = iBusiness.get("image_url").toString().replaceAll("ms.jpg", "o.jpg");
+			RESULTS[i][3] = iBusiness.get("mobile_url").toString();
+			
 			System.out.println(RESULTS[i][2]);
 
 		}

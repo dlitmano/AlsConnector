@@ -140,10 +140,10 @@ public class AlsConnectorExample {
 			product.setSubTitle(id);
 			product.setShortDescription(YelpAPI.RESULTS[i][1]);
 			product.setLongDescription("Long Description");
-			//product1.setLink("www.google.de");
-			product.setPriceGross((float) 234.64);
-			product.setAvailability("available");
-			product.setTaxes((float) 19.0);
+			product.setLink(YelpAPI.RESULTS[i][3]);
+			//product.setPriceGross((float) 234.64);
+			//product.setAvailability("available");
+			//product.setTaxes((float) 19.0);
 
 		
 			// CategoryType category1 = new CategoryType();
@@ -193,8 +193,85 @@ public class AlsConnectorExample {
 		System.out.println("-----------------");
 
 		PageDesignType pageDesign = new PageDesignType();
-		pageDesign.setCssFile("default.css");
-		pageDesign.setCss("page{ background-image: url(http://www.quinn.de/uploads/tx_dstsupersized/Hintergrundbild_grau_02.jpg); border: 1px solid black;}headline{font-size: 8.3pt;line-height: 9pt;}subheadline{font-size: 7.5pt;line-height: 8pt;}image{padding: 2px 0;}product {font-size: 7.5pt;line-height: 8.5pt;}first product {font-size: 10pt;line-height: 12pt;}first product currency {font-size: 15pt;line-height: 17pt;}first product headline {font-size: 11pt;line-height: 12pt;}first product subheadline {font-size: 10pt;line-height: 11pt;}");
+//		pageDesign.setCssFile("moebelA4.css");
+/*		pageDesign.setCss(".page{height:1073px;width:764px;padding-top:25px;padding-bottom:25px;padding-left:15px;padding-right:15px;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;font-size:12pt;line-height:1;font-family:Arial;border-style:solid;border-color:black;border-width:0px;background-size:100% 100%;ppi:96;background-image:url(http://client.als.dev.medieninnovation.com/catalogsTestResources/Kinderzimmer/background/moebel.jpg);}
+		.image{width:100%;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;display:block;border-style:none;}
+		.product .image{width:100%;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;padding-top:6px;padding-bottom:4px;}
+		.product .currency{line-height:1.4;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;color:red;text-align:right;font-size:15pt;font-weight:bold;font-style:italic;}
+		.product .headline{font-size:11pt;}
+		.product .subheadline{font-weight:normal;font-style:italic;font-size:10pt;}
+		.product .shortDescription{margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;}
+		.product{font-size:10pt;line-height:1.05;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;padding-right:10px;padding-bottom:5px;padding-top:5px;padding-left:10px;}
+		
+		.shortDescription{margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;}
+		.currency{margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;}
+		.headline{margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;padding-right:0;padding-bottom:0;padding-top:0;padding-left:0;font-weight:bold;font-size:8.3pt;line-height:1;}
+		.subheadline{margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;padding-right:0;padding-bottom:0;padding-top:0;padding-left:0;font-weight:bold;font-size:7.5pt;line-height:1;}
+		.ul{margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;padding-right:0;padding-bottom:0;padding-top:0;padding-left:15px;}
+		.first{background-image:url(http://client.als.dev.medieninnovation.com/catalogsTestResources/Kinderzimmer/background/moebel-first.jpg);padding-top:156px;height:942px;}
+		.contentPosition, .layout{position:absolute;} .page{position:relative;}");
+*/
+		pageDesign.setCss("page{ "
+				+ "background-image: url(http://www.quinn.de/uploads/tx_dstsupersized/Hintergrundbild_grau_02.jpg); "
+				+ "border: 1px solid black;"
+				+ "height: 1073px; "
+				+ "width:764px;"
+				+ "padding-top:25px;"
+				+ "padding-bottom:25px;"
+				+ "padding-left:15px;"
+				+ "padding-right:15px;"
+				+ "margin-left:0;margin-bottom:0;"
+				+ "margin-top:0;"
+				+ "margin-right:0;"
+				+ "font-size:12pt;"
+				+ "line-height:1;"
+				+ "font-family:Arial;"
+				+ "border-style:solid;"
+				+ "border-color:black;"
+				+ "border-width:0px;"
+				+ "background-size:100% 100%;"
+				+ "ppi:96;"
+				+ "}"
+				
+				+ "headline{"
+				+ "margin-left:0;"
+				+ "margin-bottom:0;"
+				+ "margin-top:0;"
+				+ "margin-right:0;"
+				+ "padding-right:0;"
+				+ "padding-bottom:0;"
+				+ "padding-top:0;"
+				+ "padding-left:0;"
+				+ "font-weight:bold;"
+				+ "font-size:8.3pt;"
+				+ "line-height:1;"
+				+ "}"
+				+ "subheadline{font-size: 7.5pt;line-height: 8pt;}"
+				+ "ul{margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;padding-right:0;padding-bottom:0;padding-top:0;padding-left:15px;}"
+				+ "image{width:100%;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;display:block;border-style:none;}"
+				+ "shortDescription{margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;}"
+				+ "currency{margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;}"
+				
+				
+				+ "product image {width:100%;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;padding-top:6px;padding-bottom:4px;}"
+			//	+ "product font-size:10pt;line-height:1.05;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;padding-right:10px;padding-bottom:5px;padding-top:5px;padding-left:10px;"
+				
+				+ "product currency{line-height:1.4;margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;color:red;text-align:right;font-size:15pt;font-weight:bold;font-style:italic;}"
+				+ "product headline{font-size:11pt;}"
+			//	+ "product subheadline{font-weight:normal;font-style:italic;font-size:10pt;}"
+			//	+ "product shortDescription{margin-left:0;margin-bottom:0;margin-top:0;margin-right:0;}"
+				
+			/*	
+				+ "first product {font-size: 10pt;line-height: 12pt;}"
+				+ "first product currency {font-size: 15pt;line-height: 17pt;}"
+				+ "first product headline {font-size: 11pt;line-height: 12pt;}"
+				+ "first product subheadline {font-size: 10pt;line-height: 11pt;}
+				*/
+				);
+		
+		
+		
+		
 		pageCollection.setPageDesign(pageDesign);
 
 		LayoutGenerationJobType jobDescription = new LayoutGenerationJobType();
