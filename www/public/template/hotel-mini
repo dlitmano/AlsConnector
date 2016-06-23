@@ -1,0 +1,23 @@
+<div id="hotel-{id}" class="media">
+	<div class="media-left">
+		<img class="media-object" data-src="..." alt="Generic placeholder image">
+	</div>
+
+	<div class="media-body">
+		<h4 class="media-heading">{name}</h4>
+
+		<p>{description}</p>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="form-group pull-right">
+					<div class="btn-group">
+						<button id="hotel-mini-{city}-{id}" type="button" class="btn btn-default btn-sm">
+							Remove from my TravelGuide
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

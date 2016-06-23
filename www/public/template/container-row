@@ -1,0 +1,3 @@
+<div id="container-row-{id}" class="row">
+	<div id="container-column-{id}" class="col-xs-12">{content}</div>
+</div>
