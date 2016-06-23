@@ -42,11 +42,21 @@ public class WikiPage {
 		return texts;
 	}
 	
-	public List<String> getImagesByParagraph(String paragraphs){
+	public List<String> getAllParagraphImages(){
+		LinkedList<String> images = new LinkedList<String>();
+		for(PageElement elem : this.elements){
+			if(!elem.imageSources.isEmpty())
+				images.addAll(elem.imageSources);
+		}
+		return images;
+	}
+	
+	
+	public List<String> getImagesByParagraph(List<String> paragraphs){
 		LinkedList<String> images = new LinkedList<String>();
 		
 		for(PageElement elem : this.elements){
-			if(!elem.imageSources.isEmpty())
+			if(paragraphs.contains(elem.headline) && !elem.imageSources.isEmpty())
 				images.addAll((elem.imageSources));
 		}
 		return null;
