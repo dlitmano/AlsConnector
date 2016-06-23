@@ -39,6 +39,7 @@ public class seleniumFetcher {
 		List<WebElement> topicElements =  driver.findElements(By.className("mw-h2section"));
 		
 		//foreach mw-h2section: generate PageElement
+		
 		for(WebElement elem : topicElements){
 			String headLine = elem.findElement(By.className("mw-headline")).getText();
 			if(!wantedTopics.contains(headLine))
