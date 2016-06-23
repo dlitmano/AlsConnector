@@ -8,8 +8,6 @@ define(['require',
 	'view/hotel-mini',
 	'view/club-mini',
 
-	'collection/content',
-
 	'collection/cities',
 	'collection/hotels',
 	'collection/clubs'
@@ -97,19 +95,17 @@ define(['require',
 		},
 
 		onGeneratePDF: function(event) {
-			var Collection = require('collection/content');
+			var collection = new Array();
 
-			var collection = new Collection();
+			var index = 0;
 
 			window.repository['/content/hotels'].each(function(model) {
-				collection.add({id: model.getId(), city: model.getCity(), type: 'hotel'});
+				collection[index++] = {id: model.getId(), city: model.getCity(), type: 'hotel'};
 			});
 
 			window.repository['/content/clubs'].each(function(model) {
-				collection.add({id: model.getId(), city: model.getCity(), type: 'club'});
+				collection[index++] = {id: model.getId(), city: model.getCity(), type: 'hotel'};
 			});
-
-			// TODO stringify collection ...
 
 			$.ajax({type: 'POST', url: '/generate-pdf', data: JSON.stringify(collection.toJSON()),
 				contentType: "application/json", dataType: 'text', success: function(id) {
