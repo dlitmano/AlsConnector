@@ -1,5 +1,4 @@
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -8,9 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class seleniumFetcher {
 	
-	WebDriver driver;
-	//C://Users//Densu//workspace//APItest//
-	
+	WebDriver driver;	
 	public seleniumFetcher(){
 		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
 		if(driver == null)
@@ -32,14 +29,9 @@ public class seleniumFetcher {
 					currentPage.headerImagesrc = driver.findElement(By.cssSelector(".wpb-topbanner>a>img")).getAttribute("src");
 				}
 			}
-			
-		
-		
 		
 		List<WebElement> topicElements =  driver.findElements(By.className("mw-h2section"));
-		
-		//foreach mw-h2section: generate PageElement
-		
+				
 		for(WebElement elem : topicElements){
 			String headLine = elem.findElement(By.className("mw-headline")).getText();
 			if(!wantedTopics.contains(headLine))

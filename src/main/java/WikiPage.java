@@ -1,5 +1,17 @@
+import java.awt.JobAttributes.DestinationType;
 import java.util.LinkedList;
 import java.util.List;
+
+import jaxb.generated.content.ContentCollectionType;
+import jaxb.generated.content.ImageType;
+import jaxb.generated.product.CustomPropertyType;
+import jaxb.generated.product.ProductType;
+
+/**
+ * 
+ * @author Patrick Dohmen
+ *Datenstruktur für die Wikivoyage Seiten
+ */
 
 public class WikiPage {
 	public String Name;
@@ -14,6 +26,30 @@ public class WikiPage {
 	}
 	public String getTitle(){
 		return this.Name;
+	}
+	
+	public ProductType getWikiPage(){
+		
+		ProductType WikiPage = new ProductType();
+		WikiPage.setTitle(this.Name);
+		String headerTextComplete = "";
+		for(String s : this.headerText)
+			headerTextComplete += s;
+		WikiPage.setLongDescription(headerTextComplete);
+		ImageType image = new ImageType();
+		image.setUrl(this.headerImagesrc);
+		image.setAlternateText("Header");
+		WikiPage.getImages().add(image);
+
+		for(PageElement el :this.elements)
+		{
+			CustomPropertyType temp = new CustomPropertyType();
+			temp.setName(el.headline);
+			temp.setValue(el.getPageText());
+			WikiPage.getCustomProperties().add(temp);
+		}
+		
+		return WikiPage;
 	}
 	
 	public List<String> getSubSectionTitles(){
@@ -74,6 +110,22 @@ class PageElement {
 		paragraphs = new LinkedList<String>();
 		subSection = new LinkedList<PageElement>();
 		imageSources = new LinkedList<String>();
+	}
+	
+	public String getPageText(){
+		String text = "";
+		for(String p : this.paragraphs){
+			text += p;
+		}
+		for(int i=0; i<this.subSection.size(); i++){
+			String text2 = "";
+			PageElement temp = this.subSection.get(i);
+			for(String s : temp.paragraphs)
+				text2 += s;
+			text += text2;
+		}
+
+		return text;
 	}
 	
 	

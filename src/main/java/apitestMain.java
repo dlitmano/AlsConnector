@@ -24,7 +24,6 @@ public class apitestMain {
 			
 		//	resultPage.headerImagesrc();
 		//	resultPage.Name;
-			
 			//Subsections
 			for(PageElement elem : resultPage.elements){
 				System.out.println(elem.headline);
