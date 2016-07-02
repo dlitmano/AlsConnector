@@ -46,7 +46,14 @@ public class WikiPage {
 			CustomPropertyType temp = new CustomPropertyType();
 			temp.setName(el.headline);
 			temp.setValue(el.getPageText());
+			
+			for(String s :el.imageSources){
+				ImageType tempImage = new ImageType();
+				tempImage.setUrl(s);
+				WikiPage.getImages().add(tempImage);
+			}
 			WikiPage.getCustomProperties().add(temp);
+			
 		}
 		
 		return WikiPage;
