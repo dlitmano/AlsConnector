@@ -28,7 +28,7 @@ public class WikiPage {
 		return this.Name;
 	}
 	
-	public ProductType getWikiPage(){
+	public ProductType getWikiPageAsProductType(){
 		
 		ProductType WikiPage = new ProductType();
 		WikiPage.setTitle(this.Name);
@@ -46,9 +46,9 @@ public class WikiPage {
 			CustomPropertyType temp = new CustomPropertyType();
 			temp.setName(el.headline);
 			temp.setValue(el.getPageText());
-			
+			ImageType tempImage;
 			for(String s :el.imageSources){
-				ImageType tempImage = new ImageType();
+				tempImage = new ImageType();
 				tempImage.setUrl(s);
 				WikiPage.getImages().add(tempImage);
 			}

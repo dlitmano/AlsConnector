@@ -3,6 +3,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import jaxb.generated.product.ProductType;
+
 public class apitestMain {
 
 	public static void main(String[] args) throws Exception {
@@ -14,10 +16,10 @@ public class apitestMain {
 		seleniumFetcher fetcher = new seleniumFetcher();
 
 		try {
-			WikiPage resultPage = fetcher.getTopicsByList("de", "cologne", wantedSections, true);
-			
+			WikiPage resultPage = fetcher.getTopicsByList("en", "cologne", wantedSections, true);
+			ProductType pt= resultPage.getWikiPageAsProductType();
 			//Main Page
-			String headerPs="";
+			/*String headerPs="";
 			for(String s: resultPage.getMainPageParagraphs())
 				headerPs += s;
 			System.out.println(headerPs);
@@ -44,7 +46,7 @@ public class apitestMain {
 				
 			}
 			
-//			resultPage.getImagesByParagraph();
+//			resultPage.getImagesByParagraph();*/
 			System.out.println("finished");
 		} catch (Exception ex) {
 			System.out.println(ex.toString());

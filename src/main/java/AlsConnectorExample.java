@@ -1,7 +1,10 @@
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Currency;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
@@ -49,6 +52,32 @@ public class AlsConnectorExample {
 	public static void main(String[] args)
 			throws UnsupportedEncodingException, IOException, JAXBException, AlsException {
 		YelpAPI yelpAPI = new YelpAPI();
+		
+		LinkedList<String> wantedSections = new LinkedList<String>();
+		
+		wantedSections.add("Understand");
+		wantedSections.add("Get in");
+		
+		
+		seleniumFetcher fetcher = new seleniumFetcher();
+		
+		//Starten webservices + Webseite
+		//webseite schickt Sprache (de/en) +  Suchbegriff und erhält Liste der Verfügbaren Themen der Wikivoyage Page
+		WikiVoyageApi http = new WikiVoyageApi();
+		Map<String, String> ListOfTopicsOnWikiPage = new HashMap<String, String>();
+		try {
+			ListOfTopicsOnWikiPage =  http.getSectionsForSearchTerm("en", "Cologne");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//ListofTopics... wird dem Nutzer zur Websete zurueckgesendet, dort waehlt er die Kategorien aus, die er haben moechte.
+		//diese Kategorien werden der Liste wantedSections hinzugefuegt
+		wantedSections.add("kategorieX");
+		
+		WikiPage BeispielPage =  fetcher.getTopicsByList("en", "Cologne", wantedSections, true);
+		ProductType BeispielPageProductType = BeispielPage.getWikiPageAsProductType();
 		
 		
 		AlsConnector alsConnector = new AlsConnector(ALS_URL_);
@@ -166,6 +195,8 @@ public class AlsConnectorExample {
 			
 			
 		}
+		
+		
 		
 		// Job erstellen
 		JobType job = new JobType();
