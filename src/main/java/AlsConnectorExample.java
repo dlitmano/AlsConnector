@@ -106,7 +106,7 @@ public class AlsConnectorExample {
 		// ---------------------------
 		Object response = exampleCreateAndSendJobLong(alsConnector);
 		handleAlsResponse(response);
-
+		fetcher.closeBrowser();
 	}
 
 	private static Object exampleSendFile(AlsConnector alsConnector)

@@ -3,6 +3,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,8 +26,10 @@ public class seleniumFetcher {
 	public WikiPage getTopicsByList(String language, String searchTerm, List<String> wantedTopics, Boolean getIntro){
 		String url= String.format("https://%s.wikivoyage.org/wiki/%s", language, searchTerm);
 		driver.get(url);
-		driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-
+		
+		//driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+		checkPageIsReady();
+		
 		WikiPage currentPage = new WikiPage(searchTerm);		
 
 		if(getIntro)
@@ -60,12 +63,27 @@ public class seleniumFetcher {
 			
 			currentPage.elements.add(currentPageElement);
 		}
+		
 		return currentPage;
 	}
 	
 	public void closeBrowser(){
 		driver.quit();
-		driver.close();
+	}
+	
+	public void checkPageIsReady() {
+		  JavascriptExecutor js = (JavascriptExecutor)driver;
+		  int i=0;
+		  while(!js.executeScript("return document.readyState").toString().equals("complete")){
+			  if(i>20)
+				  break;
+			  try {
+				  Thread.sleep(1000);
+			  }
+			  catch (InterruptedException e) 
+			  {} 
+			  i++;
+		  }
 	}
 	
 }
