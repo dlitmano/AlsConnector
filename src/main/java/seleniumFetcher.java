@@ -1,9 +1,14 @@
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.google.common.base.Predicate;
 
 public class seleniumFetcher {
 	
@@ -20,8 +25,10 @@ public class seleniumFetcher {
 	public WikiPage getTopicsByList(String language, String searchTerm, List<String> wantedTopics, Boolean getIntro){
 		String url= String.format("https://%s.wikivoyage.org/wiki/%s", language, searchTerm);
 		driver.get(url);
-		WikiPage currentPage = new WikiPage(searchTerm);
-		
+		driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+
+		WikiPage currentPage = new WikiPage(searchTerm);		
+
 		if(getIntro)
 			for(WebElement el : driver.findElements(By.cssSelector("#mw-content-text>p"))){
 				if(el.getText().length()>1){
@@ -58,6 +65,7 @@ public class seleniumFetcher {
 	
 	public void closeBrowser(){
 		driver.quit();
+		driver.close();
 	}
 	
 }

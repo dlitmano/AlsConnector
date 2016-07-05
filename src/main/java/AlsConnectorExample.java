@@ -34,6 +34,7 @@ import jaxb.generated.job.PageCollectionType;
 import jaxb.generated.job.PageDesignType;
 import jaxb.generated.jobResponse.JobCollectionResponseType;
 import jaxb.generated.jobResponse.JobResponseType;
+import jaxb.generated.product.CustomPropertyType;
 import jaxb.generated.product.ProductType;
 
 
@@ -72,6 +73,7 @@ public class AlsConnectorExample {
 			e.printStackTrace();
 		}
 		
+		
 		//ListofTopics... wird dem Nutzer zur Websete zurueckgesendet, dort waehlt er die Kategorien aus, die er haben moechte.
 		//diese Kategorien werden der Liste wantedSections hinzugefuegt
 		wantedSections.add("kategorieX");
@@ -79,6 +81,9 @@ public class AlsConnectorExample {
 		WikiPage BeispielPage =  fetcher.getTopicsByList("en", "Cologne", wantedSections, true);
 		ProductType BeispielPageProductType = BeispielPage.getWikiPageAsProductType();
 		
+		for(CustomPropertyType cpt: BeispielPageProductType.getCustomProperties()){
+			System.out.println(cpt.getValue());
+		}
 		
 		AlsConnector alsConnector = new AlsConnector(ALS_URL_);
 
