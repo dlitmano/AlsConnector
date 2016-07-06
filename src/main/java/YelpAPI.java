@@ -42,6 +42,8 @@ public class YelpAPI {
 	public static String IMG_FIRST;
 
 	public static String[][] RESULTS = new String [SEARCH_LIMIT][10];
+	public static String TERM;
+	public static String LOCATION;
 
 	/*
 	 * Update OAuth credentials below from the Yelp Developers API site:
