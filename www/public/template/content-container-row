@@ -1,3 +1,0 @@
-<div id="content-container-row-{city}-{id}-{suffix}" class="row">
-	<div id="content-container-column-{city}-{id}-{suffix}" class="col-xs-12">{content}</div>
-</div>
