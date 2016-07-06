@@ -1,0 +1,15 @@
+<li id="country-{id}" class="media">
+	<div class="media-left">
+		<a href="javascript:void">
+			<img class="media-object" data-src="..." alt="Generic placeholder image">
+		</a>
+	</div>
+
+	<div class="media-body">
+		<h4 class="media-heading">{name}</h4>
+
+		<p>{description}</p>
+
+		<ul id="country-cities-{id}" class="media-list mt-media-list"></ul>
+	</div>
+</li>
