@@ -19,6 +19,9 @@ import exception.AlsException;
 
 public class QueryHandler implements Handler {
 
+	public static String land;
+	public static String stadt;
+	
 	@Override
 	public void addLifeCycleListener(Listener arg0) {
 		// TODO Auto-generated method stub
@@ -139,20 +142,27 @@ public class QueryHandler implements Handler {
 	        	  } catch (Exception e) { /*report an error*/ }
 	        	 
 	        	 System.out.println(jb.toString());
+	        	 
+	        	 // 
+	        	
 	        	  try{
 	        	  String jbb = jb.toString();
 	        	  String[] ersterSplit= jbb.split("=");
 	        	  String ohneQuery = ersterSplit[1];
 	        	  String[] zweiterSplit = ohneQuery.split("%2C");
-	        	  String stadt = zweiterSplit[0]; //FEST
+	        	  String stadtt = zweiterSplit[0]; //FEST
 	        	  String landUnfertig = zweiterSplit[1];
 	        	  String[] dritterSplit = landUnfertig.split("+");
 	        	  String landFastFertig = dritterSplit[1];
 	        	  String[] vierterSplit = landFastFertig.split("+");
-	        	  String land = vierterSplit[0];
+	        	  String landd = vierterSplit[0];	//FEST
 	        	  
-	        	  System.out.println(stadt);
-	        	  System.out.println(land);
+	        	  System.out.println(stadtt);
+	        	  System.out.println(landd);
+	        	  
+	        	  stadt = stadtt;
+	        	  land = landd;
+	        	  
 	        	  }
 	        	  catch(Exception e){
 	        		  
