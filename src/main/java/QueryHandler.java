@@ -1,3 +1,4 @@
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -9,6 +10,7 @@ import javax.xml.bind.JAXBException;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -92,6 +94,10 @@ public class QueryHandler implements Handler {
 	@Override
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+		
+		System.out.println("Ich druecke ma nur BASKET");
+		
+		
 		// TODO Auto-generated method stub
 	     //	response.setContentType("text/html;charset=utf-8");
 	   //  	response.setHeader("content-disposition", "attachment; filename=TravelGuide.pdf");
@@ -121,7 +127,40 @@ public class QueryHandler implements Handler {
 	        	// Json Datei [{"id":"1", "city":"1","type":"hotel"}]
 	        	//POST /on-countries
 	        	//{"query":"a"}
-	        	        System.out.println("KOMMT AN");
+	        	        
+	        	
+	        	
+	        	StringBuffer jb = new StringBuffer();
+	        	  String line = null;
+	        	  try {
+	        	    BufferedReader reader = request.getReader();
+	        	    while ((line = reader.readLine()) != null)
+	        	      jb.append(line);
+	        	  } catch (Exception e) { /*report an error*/ }
+	        	 
+	        	 System.out.println(jb.toString());
+	        	  try{
+	        	  String jbb = jb.toString();
+	        	  String[] ersterSplit= jbb.split("=");
+	        	  String ohneQuery = ersterSplit[1];
+	        	  String[] zweiterSplit = ohneQuery.split("%2C");
+	        	  String stadt = zweiterSplit[0]; //FEST
+	        	  String landUnfertig = zweiterSplit[1];
+	        	  String[] dritterSplit = landUnfertig.split("+");
+	        	  String landFastFertig = dritterSplit[1];
+	        	  String[] vierterSplit = landFastFertig.split("+");
+	        	  String land = vierterSplit[0];
+	        	  
+	        	  System.out.println(stadt);
+	        	  System.out.println(land);
+	        	  }
+	        	  catch(Exception e){
+	        		  
+	        	  }
+	        	
+		    
+	       
+	        	       	        	       
 	        	//POST /on-cities
 	        	//{"query":"a","country":{"id":"2","name":"Country 2","description":"Country from server"}}
 	        	
@@ -133,35 +172,35 @@ public class QueryHandler implements Handler {
 	        	
 	        	
 	        	
-	        	JSONParser parser = new JSONParser();
+	        
 	        	
-	        	try{
-	        		Object obj = parser.parse(new FileReader("/"));
-	        		JSONObject jsonObject = (JSONObject) obj;
-	        		
-	        		String id1 = (String) jsonObject.get("ID");
-	        		int id = Integer.parseInt(id1);
-	        		String city = (String) jsonObject.get("CITY");
-	        		String type = (String) jsonObject.get("TYPE");
-	        		
-	        	    YelpAPI.TERM = "Landmarks & Historical Buildings";
-	        		YelpAPI.LOCATION = "Cologne, Germany";
-	        	    AlsConnectorExample als = new AlsConnectorExample();
-	        	    
-	        		//packe Infos in Yelp-Api zum Anfrage schicken.
-	        		//YelpAPI.TERM = "Bar";
-	        		//YelpAPI.LOCATION = "Cologne";
-	        		
-	        		//AlsConnectorExample als = new AlsConnectorExample();
-	        		
-	        		//NUN: XML Generieren, BZW. XML-Struktur (die irgendwo liegt, hoffentlich,
-	        		//aufrufen, und dann einfach Werte einfuegen).
-
-	        	
-	        	} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
+//	        	try{
+//	        		Object obj = parser.parse(new FileReader(""));
+//	        		JSONObject jsonObject = (JSONObject) obj;
+//	        		
+//	        		String id1 = (String) jsonObject.get("ID");
+//	        		int id = Integer.parseInt(id1);
+//	        		String city = (String) jsonObject.get("CITY");
+//	        		String type = (String) jsonObject.get("TYPE");
+//	        		
+//	        	    YelpAPI.TERM = "Landmarks & Historical Buildings";
+//	        		YelpAPI.LOCATION = "Cologne, Germany";
+//	        	    AlsConnectorExample als = new AlsConnectorExample();
+//	        	    
+//	        		//packe Infos in Yelp-Api zum Anfrage schicken.
+//	        		//YelpAPI.TERM = "Bar";
+//	        		//YelpAPI.LOCATION = "Cologne";
+//	        		
+//	        		//AlsConnectorExample als = new AlsConnectorExample();
+//	        		
+//	        		//NUN: XML Generieren, BZW. XML-Struktur (die irgendwo liegt, hoffentlich,
+//	        		//aufrufen, und dann einfach Werte einfuegen).
+//
+//	        	
+//	        	} catch (ParseException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} 
 
 	        	
 	        	return;

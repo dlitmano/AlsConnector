@@ -6,7 +6,7 @@ public class ServerMain {
 		// TODO Auto-generated method stub
 
 
-	    Server server = new Server(8080);
+	    Server server = new Server(9090);
 	    server.setHandler(new QueryHandler());
 	    
 	 
